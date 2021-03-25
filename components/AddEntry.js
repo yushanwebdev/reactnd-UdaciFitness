@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { getMetricMetaInfo } from '../utils/helpers';
+import UdaciSlider from '../components/UdaciSlider';
+import UdaciSteppers from '../components/UdaciSteppers';
 
 export default class AddEntry extends Component { 
     state = {
