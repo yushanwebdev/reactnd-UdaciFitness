@@ -125,7 +125,7 @@ export function isBetween (num, x, y) {
           return(
             <View>
               <MaterialIcons 
-                name="food"
+                name="fastfood"
                 color={'black'}
                 size={35} />
             </View>
