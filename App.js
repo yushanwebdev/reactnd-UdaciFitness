@@ -7,8 +7,21 @@ import reducer from './reducers';
 
 export default function App() {
   return (
-    <View style={{flex: 1, marginLeft: 18, marginRight: 10, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{color: 'red'}}>Hello!</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Hello!</Text>
     </View>
   );
+}
+
+const styles = {
+  container: {
+    flex: 1, 
+    marginLeft: 18, 
+    marginRight: 10, 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  text: {
+    color: 'red'
+  }
 }
