@@ -18,8 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+    alignItems: 'flex-start'
   },
   box: {
     height: 50,
