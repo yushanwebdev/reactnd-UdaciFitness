@@ -8,9 +8,9 @@ import reducer from './reducers';
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.box} />
-      <View style={styles.box} />
-      <View style={styles.box} />
+      <View style={[styles.box, {flex: 1}]} />
+      <View style={[styles.box, {flex: 2}]} />
+      <View style={[styles.box, {flex: 1}]} />
     </View>
   );
 }
