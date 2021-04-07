@@ -19,7 +19,7 @@ function SubmitBtn({ onPress }) {
     )
 }
 
-export default class AddEntry extends Component {
+class AddEntry extends Component {
     state = {
         run: 0,
         bike: 10,
