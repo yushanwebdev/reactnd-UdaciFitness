@@ -19,10 +19,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'stretch'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   box: {
     width: 50,
+    height: 50,
     backgroundColor: '#e76e63',
     margin: 10,
   }
