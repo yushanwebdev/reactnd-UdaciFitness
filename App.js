@@ -8,17 +8,21 @@ import reducer from './reducers';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={{color: 'red'}}>Hello!</Text>
+      <View style={styles.box} />
+      <View style={styles.box} />
+      <View style={styles.box} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    marginLeft: 18, 
-    marginRight: 10, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+    flex: 1,
+  },
+  box: {
+    height: 50,
+    width: 50,
+    backgroundColor: '#e76e63',
+    margin: 10,
   }
-});
+})
