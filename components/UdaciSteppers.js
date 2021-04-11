@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { purple, white } from '../utils/colors';
+import { gray, purple, white } from '../utils/colors';
 
 export default function UdaciSteppers({ max, unit, step, value, onIncrement, onDecrement }) {
     return (
@@ -32,8 +32,8 @@ export default function UdaciSteppers({ max, unit, step, value, onIncrement, onD
                     </TouchableOpacity>
                 </View>}
             <View style={styles.metricCounter}>
-                <Text>{value}</Text>
-                <Text>{unit}</Text>
+                <Text style={{fontSize: 24, textAlign: 'center'}}>{value}</Text>
+                <Text style={{fontSize: 18, color: gray}}>{unit}</Text>
             </View>
         </View>
     )
