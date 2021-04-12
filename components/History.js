@@ -41,7 +41,6 @@ class History extends Component {
 
     renderEmptyDate = (formattedDate) => (
         <View style={styles.item}>
-            
             <Text style={styles.noDataText}>
                 You didn't log any data on this day.
             </Text>
