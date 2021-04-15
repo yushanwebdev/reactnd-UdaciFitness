@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Agenda as UdaciFitnessCalendar } from 'react-native-calendars';
 import { addEntry, receiveEntries } from '../actions';
 import { fetchCalendarResults } from '../utils/api';
 import { getDailyReminderValue, timeToString } from '../utils/helpers';
 import { white } from '../utils/colors';
-import DateHeader from './DateHeader';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class History extends Component {
     componentDidMount() {
