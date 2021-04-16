@@ -11,7 +11,8 @@ import AppLoading from 'expo-app-loading';
 
 class History extends Component {
     state = {
-        ready: false
+        ready: false,
+        selectedDate: new Date().toISOString().slice(0, 10),
     }
 
     componentDidMount() {
@@ -20,7 +21,7 @@ class History extends Component {
         fetchCalendarResults()
             .then((entries) => dispatch(receiveEntries(entries)))
             .then(({ entries }) => {
-                if(!entries[timeToString()]) {
+                if (!entries[timeToString()]) {
                     dispatch(addEntry({
                         [timeToString()]: getDailyReminderValue()
                     }))
@@ -31,7 +32,7 @@ class History extends Component {
             })))
     }
 
-    renderItem = ({ today, ...metrics }, firstItemInDay) => (
+    renderItem = (dateKey, { today, ...metrics }, firstItemInDay) => (
         <View style={styles.item}>
             {today
                 ? <View>
@@ -39,7 +40,10 @@ class History extends Component {
                         {today}
                     </Text>
                 </View>
-                : <TouchableOpacity onPress={() => console.log('Pressed!')}>
+                : <TouchableOpacity onPress={() => this.props.navigation.navigate(
+                    'EntryDetail',
+                    { entryId: dateKey }
+                )}>
                     <MetricCard metrics={metrics} />
                 </TouchableOpacity>
             }
@@ -54,18 +58,25 @@ class History extends Component {
         </View>
     )
 
+    onDayPress = (day) => {
+        this.setState({
+            selectedDate: day.dateString
+        })
+    };
+
     render() {
         const { entries } = this.props;
-        const { ready } = this.state;
+        const { ready, selectedDate } = this.state;
 
-        if(ready === false) {
+        if (ready === false) {
             return <AppLoading />
         }
 
-        return(
-            <UdaciFitnessCalendar 
+        return (
+            <UdaciFitnessCalendar
                 items={entries}
-                renderItem={this.renderItem}
+                onDayPress={this.onDayPress}
+                renderItem={(item, firstItemInDay) => this.renderItem(selectedDate, item, firstItemInDay)}
                 renderEmptyDate={this.renderEmptyDate} />
         )
     }
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(entries) {
-    return {    
+    return {
         entries
     }
 }
