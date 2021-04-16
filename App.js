@@ -6,13 +6,17 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import History from './components/History';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function Home() {
+function Home({ navigation }) {
   return (
     <View>
       <Text>HOME</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
+        <Text>To Dashboard</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -25,31 +29,15 @@ function Dashboard() {
   )
 }
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
-            } else if (route.name === 'Dashboard') {
-              iconName = focused ? 'ios-list-box' : 'ios-list-outline';
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Dashboard" component={Dashboard} />
-      </Tab.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
