@@ -12,6 +12,7 @@ import { purple, white } from './utils/colors';
 import History from './components/History';
 import AddEntry from './components/AddEntry';
 import EntryDetail from './components/EntryDetail';
+import Title from './components/Title';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -76,12 +77,14 @@ export default function App() {
             <Stack.Screen 
               name="EntryDetail" 
               component={EntryDetail}
-              options={{
+              options={({ route }) => ({
                 headerTintColor: white,
                 headerStyle: {
                   backgroundColor: purple
-                }
-              }} />
+                },
+                title: route.params.entryId,
+                headerTitle: props => <Title {...props} />
+              })} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
