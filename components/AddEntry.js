@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
 import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers';
+import { CommonActions } from '@react-navigation/native';
 import UdaciSlider from '../components/UdaciSlider';
 import UdaciSteppers from '../components/UdaciSteppers';
-import DateHeader from './DateHeader';
 import { Ionicons } from '@expo/vector-icons';
 import TextButton from './TextButton';
 import { submitEntry, removeEntry } from '../utils/api';
@@ -76,7 +76,7 @@ class AddEntry extends Component {
             eat: 0
         }))
 
-        // Navigate to Home
+        this.toHome();
 
         submitEntry({ key, entry });
 
@@ -90,9 +90,16 @@ class AddEntry extends Component {
             [key]: getDailyReminderValue()
         }))
 
-        // Route to Home
+        this.toHome();
 
         removeEntry(key);
+    }
+
+    toHome = () => {
+        this.props.navigation.dispatch({
+            ...CommonActions.goBack(),
+            source: 'AddEntry'
+        })
     }
 
     render() {
@@ -114,7 +121,6 @@ class AddEntry extends Component {
 
         return (
             <View style={styles.container}>
-                <DateHeader date={new Date().toLocaleDateString()} />
                 {Object.keys(metaInfo).map((key) => {
                     const { getIcon, type, ...rest } = metaInfo[key];
                     const value = this.state[key];
@@ -189,7 +195,7 @@ function mapStateToProps(state) {
     const key = timeToString();
 
     return {
-        alreadyLogged: state[key] && typeof state[key].today === 'undefined'
+        alreadyLogged: state[key].length && typeof state[key][0].today === 'undefined'
     }
 }
 
