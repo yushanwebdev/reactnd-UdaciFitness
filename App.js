@@ -7,7 +7,7 @@ import reducer from './reducers';
 import History from './components/History';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Home({ navigation }) {
@@ -40,10 +40,26 @@ export default function App() {
       <Drawer.Navigator>
         <Drawer.Screen 
           name="Home" 
-          component={Home} />
+          component={Home}
+          options={{
+            drawerIcon: () => (
+              <FontAwesome
+                name='home'
+                size={20}
+                color='red' />
+            )
+          }} />
         <Drawer.Screen 
           name="Dashboard" 
-          component={Dashboard} />
+          component={Dashboard}
+          options={{
+            drawerIcon: () => (
+              <FontAwesome
+                name='dashboard'
+                size={20}
+                color='red' />
+            )
+          }} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
