@@ -13,6 +13,7 @@ import History from './components/History';
 import AddEntry from './components/AddEntry';
 import EntryDetail from './components/EntryDetail';
 import Title from './components/Title';
+import Live from './components/Live';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -33,6 +34,8 @@ function Tabs() {
             return <Ionicons name='ios-bookmarks' size={30} color={color} />
           } else if (route.name === 'AddEntry') {
             return <FontAwesome name='plus-square' size={30} color={color} />
+          } else if(route.name === 'Live') {
+            return <Ionicons name='ios-speedometer' size={30} color={color} />
           }
         },
       })}
@@ -57,6 +60,10 @@ function Tabs() {
       <Tab.Screen
         name="AddEntry"
         component={AddEntry}
+        options={{ headerShown: false }} />
+      <Tab.Screen
+        name="Live"
+        component={Live}
         options={{ headerShown: false }} />
     </Tab.Navigator>
   )
