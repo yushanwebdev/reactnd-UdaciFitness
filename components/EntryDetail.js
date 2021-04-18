@@ -19,7 +19,7 @@ class EntryDetail extends Component {
 
   shouldComponentUpdate(nextProps) {
     const metrics = nextProps.metrics;
-    return metrics.length && !metrics.today
+    return metrics.length && !metrics[0].today
   }
 
   render() {
