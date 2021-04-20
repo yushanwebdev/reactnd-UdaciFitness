@@ -21,23 +21,28 @@ import Live from './components/Live';
 
 export default class App extends Component {
   state = {
-    opacity: new Animated.Value(0)
+    opacity: new Animated.Value(0),
+    scale: new Animated.Value(0),
   }
 
   componentDidMount() {
-    const { opacity } = this.state;
+    const { opacity, scale } = this.state;
 
-    Animated.timing(opacity, { toValue: 1, duration: 1000, useNativeDriver: true })
-      .start()
+    Animated.timing(opacity, { toValue: 1, duration: 1000, useNativeDriver: true }).start();
+    Animated.spring(scale, { toValue: 1, speed: 5, useNativeDriver: true}).start();
   }
 
   render() {
-    const { opacity } = this.state;
+    const { opacity, scale } = this.state;
 
     return (
       <View style={styles.container}>
         <Animated.Image
-          style={[styles.img, { opacity }]}
+          style={[styles.img, { 
+            opacity,
+            transform: [
+              { scale: scale },
+            ]}]}
           source={{ uri: 'https://iconape.com/wp-content/png_logo_vector/marvels-agents-of-s-h-i-e-l-d.png' }} />
       </View>
     )
