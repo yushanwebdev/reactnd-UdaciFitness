@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, View, StatusBar, Animated, StyleSheet, Image } from 'react-native';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -19,14 +19,29 @@ import Live from './components/Live';
 // spring - spring physics model
 // timing - animated a value over time
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Image
-        style={styles.img}
-        source={{uri: 'https://iconape.com/wp-content/png_logo_vector/marvels-agents-of-s-h-i-e-l-d.png'}} />
-    </View>
-  );
+export default class App extends Component {
+  state = {
+    opacity: new Animated.Value(0)
+  }
+
+  componentDidMount() {
+    const { opacity } = this.state;
+
+    Animated.timing(opacity, { toValue: 1, duration: 1000, useNativeDriver: true })
+      .start()
+  }
+
+  render() {
+    const { opacity } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <Animated.Image
+          style={[styles.img, { opacity }]}
+          source={{ uri: 'https://iconape.com/wp-content/png_logo_vector/marvels-agents-of-s-h-i-e-l-d.png' }} />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
