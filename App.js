@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View, StatusBar } from 'react-native';
+import { Platform, View, StatusBar, Animated, StyleSheet, Image } from 'react-native';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,86 +15,29 @@ import EntryDetail from './components/EntryDetail';
 import Title from './components/Title';
 import Live from './components/Live';
 
-function UdaciStatusBar({ backgroundColor, ...props }) {
-  return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
-  )
-}
-
-const Tab = createBottomTabNavigator();
-
-function Tabs() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color }) => {
-          if (route.name === 'History') {
-            return <Ionicons name='ios-bookmarks' size={30} color={color} />
-          } else if (route.name === 'AddEntry') {
-            return <FontAwesome name='plus-square' size={30} color={color} />
-          } else if(route.name === 'Live') {
-            return <Ionicons name='ios-speedometer' size={30} color={color} />
-          }
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: Platform.OS === 'ios' ? purple : white,
-        style: {
-          height: 56,
-          backgroundColor: Platform.OS === 'ios' ? white : purple,
-          shadowColor: 'rgba(0, 0, 0, 0.24)',
-          shadowOffset: {
-            width: 0,
-            height: 3
-          },
-          shadowRadius: 6,
-          shadowOpacity: 1
-        }
-      }}>
-      <Tab.Screen
-        name="History"
-        component={History}
-        options={{ headerShown: false }} />
-      <Tab.Screen
-        name="AddEntry"
-        component={AddEntry}
-        options={{ headerShown: false }} />
-      <Tab.Screen
-        name="Live"
-        component={Live}
-        options={{ headerShown: false }} />
-    </Tab.Navigator>
-  )
-}
-
-const Stack = createStackNavigator();
+// decay - initial velocity and  slow to a stop
+// spring - spring physics model
+// timing - animated a value over time
 
 export default function App() {
   return (
-    <Provider store={createStore(reducer)}>
-      <NavigationContainer>
-        <View style={{ flex: 1 }}>
-          <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
-          <Stack.Navigator>
-            <Stack.Screen 
-              name="Home" 
-              component={Tabs} />
-            <Stack.Screen 
-              name="EntryDetail" 
-              component={EntryDetail}
-              options={({ route }) => ({
-                headerTintColor: white,
-                headerStyle: {
-                  backgroundColor: purple
-                },
-                title: route.params.entryId,
-                headerTitle: props => <Title {...props} />
-              })} />
-          </Stack.Navigator>
-        </View>
-      </NavigationContainer>
-    </Provider>
+    <View style={styles.container}>
+      <Image
+        style={styles.img}
+        source={{uri: 'https://iconape.com/wp-content/png_logo_vector/marvels-agents-of-s-h-i-e-l-d.png'}} />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#000'
+  },
+  img: {
+    width: 300,
+    height: 300
+  }
+})
