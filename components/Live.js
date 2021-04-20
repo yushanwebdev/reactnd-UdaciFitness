@@ -2,34 +2,30 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 import { purple, white } from '../utils/colors';
-import { Location, Permissions } from 'expo-location';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 import { calculateDirection } from '../utils/helpers';
 
 export default class Live extends Component {
     state = {
         coords: null,
-        status: 'granted',
+        status: null,
         direction: null,
     }
 
     componentDidMount() {
-        Permissions.getAsync(Permissions.LOCATION)
-            .then(({ status }) => {
-                if(status === 'granted') {
-                    return this.setLocation();
-                }
-
-                this.setState(() => ({ stauts }));
-            })
-            .catch((error) => {
-                console.warn('Error getting Location permission: ', error);
-
-                this.setState(() => ({ status: 'undetermined' }))
-            })
+        this.askPermission();
     }
 
     askPermission = () => {
-        
+        Permissions.askAsync(Permissions.LOCATION)
+        .then(({ status }) => {
+          if (status === 'granted') {
+            return this.setLocation()
+          }
+          this.setState(() => ({ status }))
+        })
+        .catch((error) => console.warn('error asking Location permission: ', error))
     }
 
     setLocation = () => {
@@ -39,7 +35,6 @@ export default class Live extends Component {
             distanceInterval: 1,
         }, ({ coords }) => {
             const newDirection = calculateDirection(coords.heading);
-            const { direction } = this.state;
 
             this.setState(() => ({
                 coords,
