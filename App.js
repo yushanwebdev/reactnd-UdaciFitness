@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, View, StatusBar } from 'react-native';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -14,6 +14,7 @@ import AddEntry from './components/AddEntry';
 import EntryDetail from './components/EntryDetail';
 import Title from './components/Title';
 import Live from './components/Live';
+import { setLocalNotification } from './utils/helpers';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -34,7 +35,7 @@ function Tabs() {
             return <Ionicons name='ios-bookmarks' size={30} color={color} />
           } else if (route.name === 'AddEntry') {
             return <FontAwesome name='plus-square' size={30} color={color} />
-          } else if(route.name === 'Live') {
+          } else if (route.name === 'Live') {
             return <Ionicons name='ios-speedometer' size={30} color={color} />
           }
         },
@@ -71,30 +72,36 @@ function Tabs() {
 
 const Stack = createStackNavigator();
 
-export default function App() {
-  return (
-    <Provider store={createStore(reducer)}>
-      <NavigationContainer>
-        <View style={{ flex: 1 }}>
-          <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
-          <Stack.Navigator>
-            <Stack.Screen 
-              name="Home" 
-              component={Tabs} />
-            <Stack.Screen 
-              name="EntryDetail" 
-              component={EntryDetail}
-              options={({ route }) => ({
-                headerTintColor: white,
-                headerStyle: {
-                  backgroundColor: purple
-                },
-                title: route.params.entryId,
-                headerTitle: props => <Title {...props} />
-              })} />
-          </Stack.Navigator>
-        </View>
-      </NavigationContainer>
-    </Provider>
-  );
+export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <NavigationContainer>
+          <View style={{ flex: 1 }}>
+            <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Home"
+                component={Tabs} />
+              <Stack.Screen
+                name="EntryDetail"
+                component={EntryDetail}
+                options={({ route }) => ({
+                  headerTintColor: white,
+                  headerStyle: {
+                    backgroundColor: purple
+                  },
+                  title: route.params.entryId,
+                  headerTitle: props => <Title {...props} />
+                })} />
+            </Stack.Navigator>
+          </View>
+        </NavigationContainer>
+      </Provider>
+    )
+  }
 }
