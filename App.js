@@ -18,33 +18,34 @@ export default class App extends React.Component {
   pickImage = () => {
     ImagePicker.launchImageLibraryAsync({
       allowEditing: true,
-      aspect: [2,1],
+      aspect: [2, 1],
     }).then((result) => {
-      if(result.cancelled) {
+      if (result.cancelled) {
         return
       }
+      
 
       ImageEditor.cropImage(result.uri, {
         offset: { x: 0, y: 0 },
         size: { width: result.width, height: result.height },
-        displaySize: { width: 200, height: 100 },
-        resizeMode: 'contain',
-      },
-      (uri) => this.setState(() => ({ image: uri })),
-      () => console.log('Error'))
+      })
+        .then(uri => {
+          alert(uri)
+          this.setState({ image: uri })
+        })
     })
   }
 
   render() {
     const { image } = this.state;
-    return(
+    return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.pickImage}>
           <Text>Open Camera Roll</Text>
         </TouchableOpacity>
 
         {image && (
-          <Image style={styles.img} source={{uri: image}} />
+          <Image style={styles.img} source={{ uri: image }} />
         )}
       </View>
     )
